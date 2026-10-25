@@ -1,0 +1,24 @@
+{
+  "name": "any-listen-extension-qqmusic-api",
+  "version": "0.1.0",
+  "keywords": [
+    "any-listen",
+    "any-listen-extension"
+  ],
+  "homepage": "https://github.com/WAADRI/any-listen-extension-qqmusic-api",
+  "license": "MIT",
+  "author": "any-listen-users",
+  "type": "module",
+  "scripts": {
+    "build": "extension-kit --build",
+    "pub": "extension-kit --publish",
+    "test": "npm run build && node test/harness.mjs"
+  },
+  "devDependencies": {
+    "@any-listen/extension-kit": "^0.1.17",
+    "@types/node": "^25.6.0"
+  },
+  "engines": {
+    "node": ">= 22"
+  }
+}

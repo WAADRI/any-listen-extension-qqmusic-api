@@ -1,0 +1,7 @@
+{
+  "version": "0.1.0",
+  "download_url": "https://github.com/WAADRI/any-listen-extension-qqmusic-api/releases/download/v0.1.0/qqmusic-api_v0.1.0.alix",
+  "log": "首个版本：基于 qqmusic.api.waadri.top 的 QQ 音乐音源，支持初始 Cookie 自动续期、搜索、播放链接、封面与歌词。",
+  "date": "2026-10-25T00:00:00.000Z",
+  "history": []
+}

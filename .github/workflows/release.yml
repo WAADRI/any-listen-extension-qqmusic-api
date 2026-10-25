@@ -1,0 +1,53 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  Build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out git repository
+        uses: actions/checkout@v6
+
+      - name: Check if release is needed
+        id: gate
+        run: |
+          VERSION=$(node -p "require('./publish/version.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if [ -n "$(git ls-remote --tags origin "refs/tags/v$VERSION")" ]; then
+            echo "should_release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_release=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install Node.js
+        if: steps.gate.outputs.should_release == 'true'
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Install Dependencies
+        if: steps.gate.outputs.should_release == 'true'
+        run: npm install
+
+      - name: Build src code
+        if: steps.gate.outputs.should_release == 'true'
+        env:
+          PRI_KEY: ${{ secrets.PRI_KEY }}
+          PUB_KEY: ${{ secrets.PUB_KEY }}
+        run: npm run build
+
+      - name: Upload artifacts
+        if: steps.gate.outputs.should_release == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: qqmusic-api-extension
+          path: build/*.alix
