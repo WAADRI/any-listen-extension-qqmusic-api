@@ -43,6 +43,44 @@ export const parseCookieString = (raw: string): Map<string, string> => {
   return pairs
 }
 
+// y.qq.com 网页版登录后的 Cookie 使用 psrf_ 前缀等网页版字段名，与接口所需名称不同。
+// 解析时按别名推导缺失的凭据字段（已有同名字段时以直接字段为准，别名值为空的跳过）。
+const CREDENTIAL_ALIASES: Record<string, string[]> = {
+  musicid: ['uin', 'psrf_qqmusicid'],
+  musickey: ['qm_keyst', 'qqmusic_key'],
+  str_musicid: ['uin', 'psrf_qqmusicid'],
+  openid: ['psrf_qqopenid', 'wxopenid'],
+  refresh_token: ['psrf_qqrefresh_token', 'wxrefresh_token'],
+  access_token: ['psrf_qqaccess_token'],
+  unionid: ['psrf_qqunionid', 'wxunionid'],
+  expired_at: ['psrf_access_token_expiresAt'],
+  refresh_key: ['psrf_qqrefresh_key'],
+  encrypt_uin: ['euin'],
+  musickey_create_time: ['psrf_musickey_createtime'],
+  login_type: ['tmeLoginType'],
+}
+
+// uin 可能带 o 前缀（如 o2533169981），推导 musicid 时去掉
+const normalizeAliasValue = (field: string, value: string): string => {
+  if ((field === 'musicid' || field === 'str_musicid') && value.startsWith('o') && /^\d+$/.test(value.slice(1))) {
+    return value.slice(1)
+  }
+  return value
+}
+
+export const deriveCredentialFields = (pairs: Map<string, string>): void => {
+  for (const field of Object.keys(CREDENTIAL_ALIASES)) {
+    if (pairs.get(field)) continue
+    for (const alias of CREDENTIAL_ALIASES[field]) {
+      const value = pairs.get(alias)
+      if (value) {
+        pairs.set(field, normalizeAliasValue(field, value))
+        break
+      }
+    }
+  }
+}
+
 export const serializeCookie = (pairs: Map<string, string>): string => {
   const parts: string[] = []
   for (const [key, value] of pairs) parts.push(`${key}=${value}`)
@@ -104,6 +142,7 @@ export const applyCookieSetting = (cookieSetting: unknown) => {
   if (cookie === serializedCookie) return false
   serializedCookie = cookie
   cookiePairs = parseCookieString(cookie)
+  deriveCredentialFields(cookiePairs)
   lastCheckAt = 0
   return true
 }

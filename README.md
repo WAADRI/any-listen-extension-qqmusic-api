@@ -39,7 +39,19 @@ npm run build  # 产出 build/qqmusic-api_v0.x.x.alix
 3. 在 **Request Headers（请求标头）** 中找到 `Cookie:` 一行，复制**完整**的 Cookie 值
 4. 粘贴到本扩展设置的 **初始 Cookie** 输入框中并保存
 
-Cookie 至少需要包含 `musicid` 和 `musickey` 两个字段；若包含 `refresh_token` / `refresh_key`，自动续期的成功率更高（取决于登录方式）。
+**无需手动改字段名**：网页版 Cookie 使用 `uin`、`qm_keyst`、`psrf_qqopenid` 等网页版字段名，与接口所需的 `musicid`、`musickey`、`openid` 不同，扩展会自动完成转换：
+
+| 网页版 Cookie | 自动转换为 |
+| --- | --- |
+| `uin` | `musicid` / `str_musicid` |
+| `qm_keyst` / `qqmusic_key` | `musickey` |
+| `psrf_qqopenid` / `wxopenid` | `openid` |
+| `psrf_qqrefresh_token` / `wxrefresh_token` | `refresh_token` |
+| `psrf_qqaccess_token` | `access_token` |
+| `psrf_qqunionid` / `wxunionid` | `unionid` |
+| `psrf_access_token_expiresAt` | `expired_at` |
+
+若 Cookie 中包含有效的 `refresh_token`（对应网页版的 `psrf_qqrefresh_token`），自动续期的成功率更高（取决于登录方式）。
 
 ## 使用
 

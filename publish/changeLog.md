@@ -1,5 +1,9 @@
 # QQ音乐 (waadri API) 更新日志
 
+## 0.1.2
+
+- 粘贴 y.qq.com 网页版 Cookie 时自动识别并转换为接口字段（uin→musicid、qm_keyst→musickey、psrf_* 前缀系列），无需手动改字段名
+
 ## 0.1.1
 
 - 新增对 API 服务上游项目 l-1124/QQMusicApi (GPL-3.0) 的致谢与引用说明

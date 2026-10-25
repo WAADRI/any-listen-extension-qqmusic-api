@@ -58,7 +58,7 @@ const config: ExtensionConfig = {
         field: 'cookie',
         name: '初始 Cookie',
         description:
-          '从浏览器登录 y.qq.com 后复制完整 Cookie 粘贴到这里，扩展会自动解析并在过期时自动续期（更新 musickey / refresh_token 等字段后写回）。',
+          '从浏览器登录 y.qq.com 后复制完整 Cookie 粘贴到这里即可：扩展会自动识别网页版字段（uin/qm_keyst/psrf_* 前缀等）并转换为接口所需格式，过期时自动续期并写回。也支持直接粘贴 musicid/musickey 格式。',
         type: 'input',
         textarea: true,
         default: '',
