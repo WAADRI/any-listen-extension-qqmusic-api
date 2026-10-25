@@ -46,10 +46,7 @@ jobs:
         run: |
           if [ -z "$PRI_KEY" ] || [ -z "$PUB_KEY" ]; then
             echo "::warning::PRI_KEY/PUB_KEY secrets not set, generating ephemeral signing keys (artifact installable, but not upgrade-compatible with other key pairs)"
-            node -e "const c=require('crypto');const {privateKey,publicKey}=c.generateKeyPairSync('rsa',{modulusLength:2048,privateKeyEncoding:{type:'pkcs8',format:'pem'},publicKeyEncoding:{type:'spki',format:'pem'}});const s=p=>p.split('
-').filter(l=>l&&!l.startsWith('-----')).join('');require('fs').writeFileSync('.env','PRI_KEY='+s(privateKey)+'
-PUB_KEY='+s(publicKey)+'
-')"
+            node scripts/gen-keys.mjs
           fi
           npm run build
 
