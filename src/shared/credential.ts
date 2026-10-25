@@ -182,14 +182,12 @@ export const refreshCredential = async (): Promise<void> => {
 export class CredentialMissingError extends Error {
   constructor() {
     super(t('qqmusic.cookieMissing'))
-    this.name = 'CredentialMissingError'
   }
 }
 
 export class CredentialInvalidError extends Error {
   constructor() {
     super(t('qqmusic.cookieInvalid'))
-    this.name = 'CredentialInvalidError'
   }
 }
 

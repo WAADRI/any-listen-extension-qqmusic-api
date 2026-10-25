@@ -12,6 +12,7 @@ import {
 } from './shared/credential'
 import { app, command, console, configuration, registerResourceAction, request, t } from './shared/hostApi'
 import { buildMusicInfo, buildPicUrl, getRawMusicId, type QqSongItem } from './shared/musicInfo'
+import { qrcToAwlrc } from './shared/qrc'
 import { fileTypeToQuality, getFileTypeChain } from './shared/quality'
 
 const CONFIG_COOKIE = 'cookie'
@@ -270,7 +271,8 @@ const musicLyric = async (params: { source: string; musicInfo: Record<string, un
   const lyric = (lrcData?.lyric || '').trim()
   const tlyric = (lrcData?.trans || '').trim() || null
   const rlyric = (lrcData?.roma || '').trim() || null
-  const awlyric = qrcData && qrcData.qrc_t !== 0 ? (qrcData.lyric || '').trim() || null : null
+  // QRC XML 需转换为 LX 逐字格式（行时间 [mm:ss.ms] + 字级 <offset,duration>），否则宿主解析为空
+  const awlyric = qrcData && qrcData.qrc_t !== 0 ? qrcToAwlrc(qrcData.lyric || '') : null
 
   if (!lyric && !awlyric) {
     if (lrcResult.status === 'rejected') throw lrcResult.reason

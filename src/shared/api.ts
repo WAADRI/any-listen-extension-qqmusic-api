@@ -13,7 +13,7 @@ export class ApiError extends Error {
 
   constructor(message: string, opts: { code?: number; statusCode?: number } = {}) {
     super(message)
-    this.name = 'ApiError'
+    // 注意：宿主 VM 冻结了 Error.prototype，这里不能赋值 this.name（严格模式下抛 TypeError）
     this.code = opts.code
     this.statusCode = opts.statusCode
   }

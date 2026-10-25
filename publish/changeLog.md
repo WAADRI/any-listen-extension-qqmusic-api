@@ -1,5 +1,10 @@
 # QQ音乐 (waadri API) 更新日志
 
+## 0.1.3
+
+- 修复歌词不显示：QRC 逐字歌词从原始 XML 转换为 Any Listen 支持的 LX 格式（行时间 [mm:ss.ms]、字级 <offset,duration>）
+- 修复宿主 VM 下自定义错误类赋值 name 抛 TypeError 的问题
+
 ## 0.1.2
 
 - 粘贴 y.qq.com 网页版 Cookie 时自动识别并转换为接口字段（uin→musicid、qm_keyst→musickey、psrf_* 前缀系列），无需手动改字段名
