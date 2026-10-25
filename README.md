@@ -91,6 +91,13 @@ src/
 test/harness.mjs          # 端到端测试（无需 Any Listen 宿主）
 ```
 
+## 致谢
+
+- 本扩展依赖的 API 服务 [qqmusic.api.waadri.top](https://qqmusic.api.waadri.top/docs) 基于开源项目 [l-1124/QQMusicApi](https://github.com/l-1124/QQMusicApi)（GPL-3.0）部署搭建，感谢原作者的封装与维护
+- [Any Listen](https://github.com/any-listen/any-listen) 及其官方扩展项目提供了扩展体系与开发参考
+
+> 音乐平台不易，请尊重版权，支持正版。本扩展仅供个人学习与研究使用。
+
 ## 常见问题
 
 - **搜索正常但无法播放 / 提示无权限**：Cookie 未配置或已失效，请在设置中粘贴新 Cookie；特定歌曲的高音质需要 VIP 权限，扩展会自动降级到可用音质
@@ -102,4 +109,6 @@ test/harness.mjs          # 端到端测试（无需 Any Listen 宿主）
 
 An [Any Listen](https://github.com/any-listen/any-listen) music source extension built on the [qqmusic.api.waadri.top](https://qqmusic.api.waadri.top/docs) API. It provides automatic Cookie credential renewal (via `/login/check_expired` + `/login/refresh_credential`, writing refreshed credentials back to the settings), music search, playback URL retrieval with quality fallback (128k up to master), covers, and lyrics (LRC + translation + QRC word-by-word).
 
-Search works without login; playback URLs require a valid QQ Music Cookie (VIP account for lossless qualities). Build with `npm install && npm run build` and install the resulting `.alix` file in Any Listen's extension manager, then paste your y.qq.com Cookie into the extension settings.
+Search works without login; playback URLs require a valid QQ Music Cookie (VIP account for lossless qualities).
+
+The API service [qqmusic.api.waadri.top](https://qqmusic.api.waadri.top/docs) is deployed from [l-1124/QQMusicApi](https://github.com/l-1124/QQMusicApi) (GPL-3.0). Many thanks to its author. Build with `npm install && npm run build` and install the resulting `.alix` file in Any Listen's extension manager, then paste your y.qq.com Cookie into the extension settings.

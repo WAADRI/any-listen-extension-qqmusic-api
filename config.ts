@@ -8,7 +8,7 @@ const config: ExtensionConfig = {
   id: 'qqmusic-api',
   name: 'QQ音乐 (waadri API)',
   description:
-    '基于 qqmusic.api.waadri.top 接口的 QQ 音乐音源扩展。支持使用初始 Cookie 自动续期登录凭证，提供歌曲搜索、播放链接获取、封面与歌词显示。高音质需要 QQ 音乐 VIP 账号的 Cookie。',
+    '基于 qqmusic.api.waadri.top 接口的 QQ 音乐音源扩展。支持使用初始 Cookie 自动续期登录凭证，提供歌曲搜索、播放链接获取、封面与歌词显示。高音质需要 QQ 音乐 VIP 账号的 Cookie。接口服务基于开源项目 l-1124/QQMusicApi (GPL-3.0) 部署。',
   version: pkg.version,
   homepage: pkg.homepage,
   license: pkg.license,
